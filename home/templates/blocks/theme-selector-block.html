@@ -1,0 +1,50 @@
+{% load static %}
+<div id="theme-selector" class="theme-selector position-bottom-right" role="region" aria-label="Theme selector">
+    <button class="theme-toggle" aria-expanded="false" aria-controls="theme-options" aria-label="Change website theme" title="Change website theme">
+        <span class="theme-icon">🎨</span>
+        <span class="theme-name">Theme</span>
+    </button>
+    <div id="theme-options" class="theme-options" role="menu">
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="system" title="Uses your system preference">
+            <span class="theme-option-icon">💻</span>
+            <span class="theme-option-name">System Default</span>
+            <span class="theme-option-description">Uses your system preference</span>
+        </button>
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="light" title="Clean and bright interface">
+            <span class="theme-option-icon">☀️</span>
+            <span class="theme-option-name">Light Theme</span>
+            <span class="theme-option-description">Clean and bright interface</span>
+        </button>
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="dark" title="Easy on the eyes in low light">
+            <span class="theme-option-icon">🌙</span>
+            <span class="theme-option-name">Dark Theme</span>
+            <span class="theme-option-description">Easy on the eyes in low light</span>
+        </button>
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="blue" title="Calm blue color scheme">
+            <span class="theme-option-icon">🌊</span>
+            <span class="theme-option-name">Ocean Breeze</span>
+            <span class="theme-option-description">Calm blue color scheme</span>
+        </button>
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="green" title="Natural green color scheme">
+            <span class="theme-option-icon">🌲</span>
+            <span class="theme-option-name">Forest Green</span>
+            <span class="theme-option-description">Natural green color scheme</span>
+        </button>
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="contrast" title="Enhanced visibility for accessibility">
+            <span class="theme-option-icon">🎨</span>
+            <span class="theme-option-name">High Contrast</span>
+            <span class="theme-option-description">Enhanced visibility for accessibility</span>
+        </button>
+        <button class="theme-option" role="menuitemradio" aria-checked="false" data-theme="sunset" title="Warm orange and purple tones">
+            <span class="theme-option-icon">🌅</span>
+            <span class="theme-option-name">Sunset Glow</span>
+            <span class="theme-option-description">Warm orange and purple tones</span>
+        </button>
+    </div>
+    <div class="theme-selector-footer">
+        <span class="theme-version">v1.0</span>
+        <button class="theme-reset" aria-label="Reset to system default">↺</button>
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="{% static 'home/css/theme-selector.css' %}">
+<script src="{% static 'home/js/theme-selector.js' %}"></script>
