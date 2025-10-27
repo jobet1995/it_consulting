@@ -1,0 +1,72 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="hero-carousel" 
+     data-auto-rotate="{{ value.auto_rotate|yesno:'true,false' }}" 
+     data-rotation-speed="{{ value.rotation_speed }}" 
+     data-pause-on-hover="{{ value.pause_on_hover|yesno:'true,false' }}"
+     data-animation-style="{{ value.animation_style }}"
+     data-ajax-url="{% if value.ajax_url %}{{ value.ajax_url }}{% endif %}">
+  <div class="hero-carousel-wrapper">
+    {% for slide in value.slides %}
+    <div class="hero-carousel-slide{% if forloop.first %} active{% endif %}" 
+         data-slide-index="{{ forloop.counter0 }}"
+         data-id="{{ slide.id|default:forloop.counter0 }}">
+      {% if slide.background_image %}
+        {% image slide.background_image fill-1920x1080 as bg_image %}
+        <div class="hero-carousel-background" style="background-image: url('{{ bg_image.url }}');">
+      {% elif slide.background_color %}
+        <div class="hero-carousel-background" style="background-color: {{ slide.background_color }};">
+      {% else %}
+        <div class="hero-carousel-background" style="background-color: #f8f9fa;">
+      {% endif %}
+        <div class="hero-carousel-overlay" style="opacity: {{ value.overlay_opacity|floatformat:-2|default:'0.5' }}"></div>
+      </div>
+      
+      <div class="hero-carousel-content content-width-{{ value.content_width }}" 
+           style="text-align: {{ value.text_alignment }}; padding-top: {{ value.padding_top }}px; padding-bottom: {{ value.padding_bottom }}px;">
+        {% if slide.headline %}
+          <h1 class="hero-carousel-headline">{{ slide.headline }}</h1>
+        {% endif %}
+        
+        {% if slide.subtitle %}
+          <h2 class="hero-carousel-subtitle">{{ slide.subtitle }}</h2>
+        {% endif %}
+        
+        {% if slide.description %}
+          <div class="hero-carousel-description">
+            {{ slide.description }}
+          </div>
+        {% endif %}
+        
+        {% if slide.cta_text and slide.cta_link %}
+          <div class="hero-carousel-cta">
+            <a href="{{ slide.cta_link }}" class="btn btn-{{ slide.cta_style|default:'primary' }} ajax-trigger"
+               data-action="cta-click" data-element-id="{{ slide.id|default:forloop.counter0 }}">
+              {{ slide.cta_text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+  {% if value.show_indicators and value.slides|length > 1 %}
+  <div class="hero-carousel-indicators">
+    {% for slide in value.slides %}
+      <button class="hero-carousel-indicator{% if forloop.first %} active{% endif %}" 
+              aria-label="Go to slide {{ forloop.counter }}" 
+              data-slide-to="{{ forloop.counter0 }}"></button>
+    {% endfor %}
+  </div>
+  {% endif %}
+  
+  {% if value.show_navigation and value.slides|length > 1 %}
+  <button class="hero-carousel-control hero-carousel-control-prev" aria-label="Previous slide">
+    <span class="carousel-control-icon">‹</span>
+  </button>
+  <button class="hero-carousel-control hero-carousel-control-next" aria-label="Next slide">
+    <span class="carousel-control-icon">›</span>
+  </button>
+  {% endif %}
+</div>

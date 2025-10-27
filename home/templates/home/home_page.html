@@ -1,21 +1,25 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags home_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
 <link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
+{% carousel_assets %}
+{% video_background_assets %}
+{% service_card_assets %}
 {% endblock extra_css %}
 
 {% block content %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
 {% include 'home/welcome_page.html' %}
 
+{# Render the StreamField content #}
+{% for block in page.content %}
+  {% include_block block %}
+{% endfor %}
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/hero-carousel.js' %}"></script>
+<script src="{% static 'js/hero-video-background.js' %}"></script>
+{% endblock extra_js %}

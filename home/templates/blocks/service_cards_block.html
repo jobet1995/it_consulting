@@ -1,0 +1,21 @@
+{% load wagtailcore_tags %}
+
+<section class="service-cards-section" style="text-align: {{ value.text_alignment }};">
+  <div class="service-cards-container">
+    {% if value.heading %}
+      <h2 class="service-cards-heading">{{ value.heading }}</h2>
+    {% endif %}
+    
+    {% if value.description %}
+      <div class="service-cards-description">{{ value.description }}</div>
+    {% endif %}
+    
+    <div class="service-cards-grid service-cards-columns-{{ value.columns }} service-cards-spacing-{{ value.card_spacing }}">
+      {% for card in value.cards %}
+        <div class="service-cards-item">
+          {% include "blocks/service_card_block.html" with value=card %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

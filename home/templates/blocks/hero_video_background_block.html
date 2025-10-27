@@ -1,0 +1,66 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="hero-video-background" 
+     data-overlay-gradient="{{ value.overlay_gradient }}"
+     data-overlay-opacity="{{ value.overlay_opacity }}"
+     data-content-alignment="{{ value.content_alignment }}"
+     data-content-vertical-position="{{ value.content_vertical_position }}"
+     data-animation-style="{{ value.animation_style }}"
+     data-enable-mute="{{ value.enable_mute|yesno:'true,false' }}"
+     data-enable-loop="{{ value.enable_loop|yesno:'true,false' }}"
+     data-enable-autoplay="{{ value.enable_autoplay|yesno:'true,false' }}"
+     data-disable-on-mobile="{{ value.disable_on_mobile|yesno:'true,false' }}">
+  <div class="hero-video-container">
+    {% if value.fallback_image %}
+      {% image value.fallback_image fill-1920x1080 as fallback_image %}
+      <div class="hero-video-fallback" style="background-image: url('{{ fallback_image.url }}');"></div>
+    {% endif %}
+    
+    {% if value.background_video %}
+      <video class="hero-video-element" 
+             autoplay="{{ value.enable_autoplay|yesno:'autoplay,' }}" 
+             loop="{{ value.enable_loop|yesno:'loop,' }}" 
+             muted="{{ value.enable_mute|yesno:'muted,' }}" 
+             playsinline
+             preload="auto">
+        <source src="{{ value.background_video }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% endif %}
+    
+    <div class="hero-video-overlay overlay-{{ value.overlay_gradient }}" 
+         style="opacity: {{ value.overlay_opacity|floatformat:-2|default:'0.5' }};"></div>
+    
+    <div class="hero-video-content content-width-{{ value.content_width }} content-align-{{ value.content_alignment }} content-vertical-{{ value.content_vertical_position }}">
+      <div class="hero-video-content-inner">
+        {% if value.headline %}
+          <h1 class="hero-video-headline">{{ value.headline }}</h1>
+        {% endif %}
+        
+        {% if value.subtitle %}
+          <h2 class="hero-video-subtitle">{{ value.subtitle }}</h2>
+        {% endif %}
+        
+        {% if value.description %}
+          <div class="hero-video-description">
+            {{ value.description }}
+          </div>
+        {% endif %}
+        
+        <div class="hero-video-ctas">
+          {% if value.cta_primary and value.cta_primary_link %}
+            <a href="{{ value.cta_primary_link }}" class="btn btn-{{ value.cta_primary_style|default:'primary' }}">
+              {{ value.cta_primary }}
+            </a>
+          {% endif %}
+          
+          {% if value.cta_secondary and value.cta_secondary_link %}
+            <a href="{{ value.cta_secondary_link }}" class="btn btn-{{ value.cta_secondary_style|default:'outline' }}">
+              {{ value.cta_secondary }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

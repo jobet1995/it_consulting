@@ -7,6 +7,10 @@ from wagtail.snippets.models import register_snippet
 
 from home.blocks import (
     HeroBannerBlock, 
+    HeroCarouselBlock,
+    HeroVideoBackgroundBlock,
+    ServiceCardBlock,
+    ServiceCardsBlock,
     FeatureBlock, 
     TestimonialBlock, 
     StatsBlock, 
@@ -215,6 +219,235 @@ class ThemeSettings(models.Model):
         verbose_name_plural = "Theme Settings"
 
 
+@register_snippet
+class CarouselSettings(models.Model):
+    """Settings for hero carousel components."""
+    
+    name = models.CharField(max_length=100, unique=True, help_text="Name for this carousel configuration")
+    is_active = models.BooleanField(default=False, help_text="Make this the active carousel configuration")
+    
+    # Carousel settings
+    auto_rotate = models.BooleanField(default=True, help_text="Automatically rotate slides every few seconds.")
+    rotation_speed = models.IntegerField(
+        choices=[
+            (3000, '3 seconds'),
+            (5000, '5 seconds'),
+            (7000, '7 seconds'),
+            (10000, '10 seconds'),
+        ],
+        default=5000,
+        help_text='Time between slide transitions.'
+    )
+    
+    show_indicators = models.BooleanField(default=True, help_text='Show slide position indicators.')
+    show_navigation = models.BooleanField(default=True, help_text='Show previous/next navigation arrows.')
+    pause_on_hover = models.BooleanField(default=True, help_text='Pause rotation when user hovers over carousel.')
+    
+    # AJAX settings
+    ajax_url = models.URLField(blank=True, null=True, help_text='URL for AJAX requests. Leave blank to disable AJAX functionality.')
+    ajax_method = models.CharField(
+        max_length=10,
+        choices=[
+            ('GET', 'GET'),
+            ('POST', 'POST'),
+        ],
+        default='POST',
+        help_text='HTTP method for AJAX requests.'
+    )
+    
+    # Visual effects
+    overlay_opacity = models.CharField(
+        max_length=10,
+        choices=[('0', '0%'), ('25', '25%'), ('50', '50%'), ('75', '75%'), ('90', '90%')],
+        default='50',
+        help_text='Overlay opacity for better readability.'
+    )
+    
+    text_alignment = models.CharField(
+        max_length=10,
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='center',
+        help_text='Text alignment within slides.'
+    )
+    
+    animation_style = models.CharField(
+        max_length=20,
+        choices=[
+            ('fade', 'Fade'),
+            ('slide', 'Slide'),
+            ('zoom', 'Zoom'),
+        ],
+        default='fade',
+        help_text='Transition animation style.'
+    )
+    
+    content_width = models.CharField(
+        max_length=20,
+        choices=[
+            ('narrow', 'Narrow (600px)'),
+            ('medium', 'Medium (900px)'),
+            ('wide', 'Wide (1200px)'),
+            ('full', 'Full Width'),
+        ],
+        default='medium',
+        help_text='Content container width.'
+    )
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('is_active'),
+        FieldPanel('auto_rotate'),
+        FieldPanel('rotation_speed'),
+        FieldPanel('show_indicators'),
+        FieldPanel('show_navigation'),
+        FieldPanel('pause_on_hover'),
+        FieldPanel('ajax_url'),
+        FieldPanel('ajax_method'),
+        FieldPanel('overlay_opacity'),
+        FieldPanel('text_alignment'),
+        FieldPanel('animation_style'),
+        FieldPanel('content_width'),
+    ]
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Carousel Setting"
+        verbose_name_plural = "Carousel Settings"
+
+
+@register_snippet
+class VideoBackgroundSettings(models.Model):
+    """Settings for hero video background components."""
+    
+    name = models.CharField(max_length=100, unique=True, help_text="Name for this video background configuration")
+    is_active = models.BooleanField(default=False, help_text="Make this the active video background configuration")
+    
+    # Video settings
+    background_video = models.URLField(help_text='URL to the background video (MP4 format recommended).')
+    fallback_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Fallback image for mobile devices or when video is disabled.'
+    )
+    
+    # Overlay options
+    overlay_gradient = models.CharField(
+        max_length=20,
+        choices=[
+            ('none', 'None'),
+            ('dark', 'Dark Gradient'),
+            ('light', 'Light Gradient'),
+            ('blue', 'Blue Gradient'),
+            ('green', 'Green Gradient'),
+            ('purple', 'Purple Gradient'),
+        ],
+        default='dark',
+        help_text='Gradient overlay for better text readability.'
+    )
+    
+    overlay_opacity = models.CharField(
+        max_length=10,
+        choices=[('0', '0%'), ('10', '10%'), ('25', '25%'), ('50', '50%'), ('75', '75%'), ('90', '90%')],
+        default='50',
+        help_text='Overlay opacity for better readability.'
+    )
+    
+    # Display options
+    content_alignment = models.CharField(
+        max_length=10,
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='center',
+        help_text='Content alignment within the hero section.'
+    )
+    
+    content_vertical_position = models.CharField(
+        max_length=10,
+        choices=[
+            ('top', 'Top'),
+            ('middle', 'Middle'),
+            ('bottom', 'Bottom'),
+        ],
+        default='middle',
+        help_text='Vertical position of content within the hero section.'
+    )
+    
+    content_width = models.CharField(
+        max_length=20,
+        choices=[
+            ('narrow', 'Narrow (600px)'),
+            ('medium', 'Medium (900px)'),
+            ('wide', 'Wide (1200px)'),
+            ('full', 'Full Width'),
+        ],
+        default='medium',
+        help_text='Content container width.'
+    )
+    
+    # Advanced options
+    enable_mute = models.BooleanField(default=True, help_text='Mute the video by default (recommended for autoplay).')
+    enable_loop = models.BooleanField(default=True, help_text='Loop the video continuously.')
+    enable_autoplay = models.BooleanField(default=True, help_text='Autoplay the video when page loads.')
+    disable_on_mobile = models.BooleanField(default=False, help_text='Disable video on mobile devices to save bandwidth.')
+    
+    # Animation
+    animation_style = models.CharField(
+        max_length=20,
+        choices=[
+            ('none', 'None'),
+            ('fade-in', 'Fade In'),
+            ('fade-in-up', 'Fade In Up'),
+            ('fade-in-down', 'Fade In Down'),
+            ('slide-in-up', 'Slide In Up'),
+            ('slide-in-down', 'Slide In Down'),
+        ],
+        default='fade-in',
+        help_text='Animation for the content.'
+    )
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('is_active'),
+        FieldPanel('background_video'),
+        FieldPanel('fallback_image'),
+        FieldPanel('overlay_gradient'),
+        FieldPanel('overlay_opacity'),
+        FieldPanel('content_alignment'),
+        FieldPanel('content_vertical_position'),
+        FieldPanel('content_width'),
+        FieldPanel('enable_mute'),
+        FieldPanel('enable_loop'),
+        FieldPanel('enable_autoplay'),
+        FieldPanel('disable_on_mobile'),
+        FieldPanel('animation_style'),
+    ]
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Video Background Setting"
+        verbose_name_plural = "Video Background Settings"
+
+
 class HomePage(Page):
     """Home page model with advanced content blocks."""
     
@@ -233,6 +466,10 @@ class HomePage(Page):
     # Main content streamfield
     content = StreamField([
         ('hero_banner', HeroBannerBlock()),
+        ('hero_carousel', HeroCarouselBlock()),
+        ('hero_video_background', HeroVideoBackgroundBlock()),
+        ('service_card', ServiceCardBlock()),
+        ('service_cards', ServiceCardsBlock()),
         ('features', FeatureBlock()),
         ('testimonials', TestimonialBlock()),
         ('stats', StatsBlock()),

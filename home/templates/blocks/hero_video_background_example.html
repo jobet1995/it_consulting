@@ -1,0 +1,46 @@
+{# Example usage of the HeroVideoBackgroundBlock in a template #}
+
+<div class="hero-video-background" 
+     data-overlay-gradient="dark"
+     data-overlay-opacity="0.5"
+     data-content-alignment="center"
+     data-content-vertical-position="middle"
+     data-animation-style="fade-in-up"
+     data-enable-mute="true"
+     data-enable-loop="true"
+     data-enable-autoplay="true"
+     data-disable-on-mobile="false">
+  <div class="hero-video-container">
+    <div class="hero-video-fallback" style="background-image: url('/static/images/video-fallback.jpg');"></div>
+    
+    <video class="hero-video-element" 
+           autoplay="autoplay" 
+           loop="loop" 
+           muted="muted" 
+           playsinline
+           preload="auto">
+      <source src="/static/videos/hero-background.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="hero-video-overlay overlay-dark" style="opacity: 0.5;"></div>
+    
+    <div class="hero-video-content content-width-medium content-align-center content-vertical-middle">
+      <div class="hero-video-content-inner animation-fade-in-up">
+        <h1 class="hero-video-headline">Innovative IT Solutions</h1>
+        <h2 class="hero-video-subtitle">Transforming businesses through cutting-edge technology</h2>
+        <div class="hero-video-description">
+          <p>Leading provider of cloud services, cybersecurity, and digital transformation solutions for enterprises worldwide.</p>
+        </div>
+        <div class="hero-video-ctas">
+          <a href="/services" class="btn btn-primary">
+            Explore Services
+          </a>
+          <a href="/contact" class="btn btn-outline">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

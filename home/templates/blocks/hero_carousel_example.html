@@ -1,0 +1,87 @@
+{# Example usage of the HeroCarouselBlock in a template #}
+
+<div class="hero-carousel" 
+     data-auto-rotate="true" 
+     data-rotation-speed="5000" 
+     data-pause-on-hover="true"
+     data-animation-style="fade">
+  <div class="hero-carousel-wrapper">
+    <!-- Slide 1 -->
+    <div class="hero-carousel-slide active" data-slide-index="0">
+      <div class="hero-carousel-background" style="background-image: url('/static/images/slide1.jpg');">
+        <div class="hero-carousel-overlay" style="opacity: 0.5"></div>
+      </div>
+      
+      <div class="hero-carousel-content content-width-medium" 
+           style="text-align: center; padding-top: 100px; padding-bottom: 100px;">
+        <h1 class="hero-carousel-headline">Innovative IT Solutions</h1>
+        <h2 class="hero-carousel-subtitle">Transforming businesses through technology</h2>
+        <div class="hero-carousel-description">
+          <p>Leading provider of cutting-edge IT consulting services for enterprises worldwide.</p>
+        </div>
+        <div class="hero-carousel-cta">
+          <a href="/services" class="btn btn-primary">
+            Explore Services
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide 2 -->
+    <div class="hero-carousel-slide" data-slide-index="1">
+      <div class="hero-carousel-background" style="background-color: #2563eb;">
+        <div class="hero-carousel-overlay" style="opacity: 0.3"></div>
+      </div>
+      
+      <div class="hero-carousel-content content-width-medium" 
+           style="text-align: center; padding-top: 100px; padding-bottom: 100px;">
+        <h1 class="hero-carousel-headline">Cloud Migration Experts</h1>
+        <h2 class="hero-carousel-subtitle">Seamless transition to the cloud</h2>
+        <div class="hero-carousel-description">
+          <p>Specialized in helping businesses migrate to cloud platforms with zero downtime.</p>
+        </div>
+        <div class="hero-carousel-cta">
+          <a href="/cloud-services" class="btn btn-outline">
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide 3 -->
+    <div class="hero-carousel-slide" data-slide-index="2">
+      <div class="hero-carousel-background" style="background-image: url('/static/images/slide3.jpg');">
+        <div class="hero-carousel-overlay" style="opacity: 0.7"></div>
+      </div>
+      
+      <div class="hero-carousel-content content-width-medium" 
+           style="text-align: center; padding-top: 100px; padding-bottom: 100px;">
+        <h1 class="hero-carousel-headline">Cybersecurity First</h1>
+        <h2 class="hero-carousel-subtitle">Protecting your digital assets</h2>
+        <div class="hero-carousel-description">
+          <p>Comprehensive security solutions to safeguard your business from evolving threats.</p>
+        </div>
+        <div class="hero-carousel-cta">
+          <a href="/security" class="btn btn-secondary">
+            Get Protected
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Indicators -->
+  <div class="hero-carousel-indicators">
+    <button class="hero-carousel-indicator active" aria-label="Go to slide 1" data-slide-to="0"></button>
+    <button class="hero-carousel-indicator" aria-label="Go to slide 2" data-slide-to="1"></button>
+    <button class="hero-carousel-indicator" aria-label="Go to slide 3" data-slide-to="2"></button>
+  </div>
+  
+  <!-- Navigation -->
+  <button class="hero-carousel-control hero-carousel-control-prev" aria-label="Previous slide">
+    <span class="carousel-control-icon">‹</span>
+  </button>
+  <button class="hero-carousel-control hero-carousel-control-next" aria-label="Next slide">
+    <span class="carousel-control-icon">›</span>
+  </button>
+</div>

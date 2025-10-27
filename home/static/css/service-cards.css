@@ -1,0 +1,124 @@
+/* Service Cards Section Styles */
+
+.service-cards-section {
+  padding: 4rem 1rem;
+  background-color: #fff;
+}
+
+.service-cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.service-cards-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #212529;
+  text-align: center;
+}
+
+.service-cards-description {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-bottom: 3rem;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-cards-description p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Grid Layout */
+.service-cards-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Column Variations */
+.service-cards-columns-1 {
+  grid-template-columns: 1fr;
+}
+
+.service-cards-columns-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.service-cards-columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.service-cards-columns-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Spacing Variations */
+.service-cards-spacing-compact {
+  gap: 1rem;
+}
+
+.service-cards-spacing-normal {
+  gap: 2rem;
+}
+
+.service-cards-spacing-spacious {
+  gap: 3rem;
+}
+
+/* Individual Card Item */
+.service-cards-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .service-cards-columns-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .service-cards-section {
+    padding: 3rem 1rem;
+  }
+  
+  .service-cards-heading {
+    font-size: 1.75rem;
+  }
+  
+  .service-cards-description {
+    font-size: 1rem;
+  }
+  
+  .service-cards-columns-3,
+  .service-cards-columns-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .service-cards-section {
+    padding: 2rem 1rem;
+  }
+  
+  .service-cards-heading {
+    font-size: 1.5rem;
+  }
+  
+  .service-cards-columns-2,
+  .service-cards-columns-3,
+  .service-cards-columns-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-cards-grid {
+    gap: 1.5rem;
+  }
+}

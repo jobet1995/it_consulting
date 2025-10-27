@@ -121,6 +121,137 @@ class HeroBannerBlock(blocks.StructBlock):
     padding_top = IntegerBlock(required=False, min_value=0, max_value=200, help_text='Top padding in pixels.')
     padding_bottom = IntegerBlock(required=False, min_value=0, max_value=200, help_text='Bottom padding in pixels.')
 
+class HeroCarouselBlock(blocks.StructBlock):
+    """Hero Carousel Block for rotating multiple hero messages or announcements.
+    
+    Features smooth fade transitions, dynamic responsive design, and up to 5 slides.
+    Each slide can have a background image, headline, subtitle, and CTA button.
+    """
+    
+    # Carousel settings
+    auto_rotate = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Automatically rotate slides every few seconds.'
+    )
+    
+    rotation_speed = ChoiceBlock(
+        choices=[
+            ('3000', '3 seconds'),
+            ('5000', '5 seconds'),
+            ('7000', '7 seconds'),
+            ('10000', '10 seconds'),
+        ],
+        default='5000',
+        help_text='Time between slide transitions.'
+    )
+    
+    show_indicators = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Show slide position indicators.'
+    )
+    
+    show_navigation = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Show previous/next navigation arrows.'
+    )
+    
+    pause_on_hover = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Pause rotation when user hovers over carousel.'
+    )
+    
+    # AJAX settings
+    ajax_url = URLBlock(
+        required=False,
+        help_text='URL for AJAX requests. Leave blank to disable AJAX functionality.'
+    )
+    
+    ajax_method = ChoiceBlock(
+        choices=[
+            ('GET', 'GET'),
+            ('POST', 'POST'),
+        ],
+        default='POST',
+        help_text='HTTP method for AJAX requests.'
+    )
+    
+    # Slides
+    slides = blocks.ListBlock(
+        blocks.StructBlock([
+            # Background options
+            ('background_image', ImageChooserBlock(required=False, help_text='Background image for this slide.')),
+            ('background_color', CharBlock(required=False, max_length=7, help_text='Background color in hex format (e.g., #FF0000).')),
+            
+            # Content
+            ('headline', CharBlock(required=False, max_length=150, help_text='Main headline for this slide.')),
+            ('subtitle', TextBlock(required=False, max_length=300, help_text='Subtitle for this slide.')),
+            ('description', RichTextBlock(required=False, help_text='Detailed description for this slide.')),
+            
+            # CTA button
+            ('cta_text', CharBlock(required=False, max_length=50, help_text='CTA button text.')),
+            ('cta_link', URLBlock(required=False, help_text='CTA button link.')),
+            ('cta_style', ChoiceBlock(
+                choices=[
+                    ('primary', 'Primary'),
+                    ('secondary', 'Secondary'),
+                    ('outline', 'Outline'),
+                    ('ghost', 'Ghost'),
+                ],
+                default='primary',
+                help_text='CTA button style.'
+            )),
+        ]),
+        min_num=1,
+        max_num=5,
+        help_text='Add slides to the carousel (1-5 slides recommended).'
+    )
+    
+    # Visual effects
+    overlay_opacity = ChoiceBlock(
+        choices=[('0', '0%'), ('25', '25%'), ('50', '50%'), ('75', '75%'), ('90', '90%')],
+        default='50',
+        help_text='Overlay opacity for better readability.'
+    )
+    
+    text_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='center',
+        help_text='Text alignment within slides.'
+    )
+    
+    animation_style = ChoiceBlock(
+        choices=[
+            ('fade', 'Fade'),
+            ('slide', 'Slide'),
+            ('zoom', 'Zoom'),
+        ],
+        default='fade',
+        help_text='Transition animation style.'
+    )
+    
+    # Advanced options
+    enable_parallax = BooleanBlock(required=False, default=False, help_text='Enable parallax effect for background images.')
+    content_width = ChoiceBlock(
+        choices=[
+            ('narrow', 'Narrow (600px)'),
+            ('medium', 'Medium (900px)'),
+            ('wide', 'Wide (1200px)'),
+            ('full', 'Full Width'),
+        ],
+        default='medium',
+        help_text='Content container width.'
+    )
+    
+    padding_top = IntegerBlock(required=False, min_value=0, max_value=200, help_text='Top padding in pixels.')
+    padding_bottom = IntegerBlock(required=False, min_value=0, max_value=200, help_text='Bottom padding in pixels.')
 
 class FeatureBlock(blocks.StructBlock):
     """Feature block for showcasing services or products."""
@@ -366,4 +497,307 @@ class ThemeSelectorBlock(blocks.StructBlock):
         ],
         default='default',
         help_text='Style of focus outlines for keyboard navigation.'
+    )
+
+class HeroVideoBackgroundBlock(blocks.StructBlock):
+    """Full-screen hero with autoplay tech-themed video background.
+    
+    Features overlay gradient, headline, subtitle, and CTA buttons.
+    Includes mobile-friendly fallback image for devices that don't support video.
+    """
+    
+    # Video background
+    background_video = URLBlock(
+        required=True,
+        help_text='URL to the background video (MP4 format recommended).'
+    )
+    
+    # Fallback image for mobile devices
+    fallback_image = ImageChooserBlock(
+        required=True,
+        help_text='Fallback image for mobile devices or when video is disabled.'
+    )
+    
+    # Overlay options
+    overlay_gradient = ChoiceBlock(
+        choices=[
+            ('none', 'None'),
+            ('dark', 'Dark Gradient'),
+            ('light', 'Light Gradient'),
+            ('blue', 'Blue Gradient'),
+            ('green', 'Green Gradient'),
+            ('purple', 'Purple Gradient'),
+        ],
+        default='dark',
+        help_text='Gradient overlay for better text readability.'
+    )
+    
+    overlay_opacity = ChoiceBlock(
+        choices=[('0', '0%'), ('10', '10%'), ('25', '25%'), ('50', '50%'), ('75', '75%'), ('90', '90%')],
+        default='50',
+        help_text='Overlay opacity for better readability.'
+    )
+    
+    # Content
+    headline = CharBlock(
+        required=True,
+        max_length=150,
+        help_text='Main headline for the hero section.'
+    )
+    
+    subtitle = TextBlock(
+        required=False,
+        max_length=300,
+        help_text='Subtitle for the hero section.'
+    )
+    
+    description = RichTextBlock(
+        required=False,
+        help_text='Detailed description for the hero section.'
+    )
+    
+    # CTA buttons
+    cta_primary = CharBlock(
+        required=False,
+        max_length=150,
+        help_text='Primary CTA text.'
+    )
+    
+    cta_primary_link = URLBlock(
+        required=False,
+        help_text='Primary CTA link.'
+    )
+    
+    cta_primary_style = ChoiceBlock(
+        choices=[
+            ('primary', 'Primary'),
+            ('secondary', 'Secondary'),
+            ('outline', 'Outline'),
+            ('ghost', 'Ghost'),
+        ],
+        default='primary',
+        help_text='Primary CTA style.'
+    )
+    
+    cta_secondary = CharBlock(
+        required=False,
+        max_length=150,
+        help_text='Secondary CTA text.'
+    )
+    
+    cta_secondary_link = URLBlock(
+        required=False,
+        help_text='Secondary CTA link.'
+    )
+    
+    cta_secondary_style = ChoiceBlock(
+        choices=[
+            ('primary', 'Primary'),
+            ('secondary', 'Secondary'),
+            ('outline', 'Outline'),
+            ('ghost', 'Ghost'),
+        ],
+        default='outline',
+        help_text='Secondary CTA style.'
+    )
+    
+    # Display options
+    content_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='center',
+        help_text='Content alignment within the hero section.'
+    )
+    
+    content_vertical_position = ChoiceBlock(
+        choices=[
+            ('top', 'Top'),
+            ('middle', 'Middle'),
+            ('bottom', 'Bottom'),
+        ],
+        default='middle',
+        help_text='Vertical position of content within the hero section.'
+    )
+    
+    content_width = ChoiceBlock(
+        choices=[
+            ('narrow', 'Narrow (600px)'),
+            ('medium', 'Medium (900px)'),
+            ('wide', 'Wide (1200px)'),
+            ('full', 'Full Width'),
+        ],
+        default='medium',
+        help_text='Content container width.'
+    )
+    
+    # Advanced options
+    enable_mute = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Mute the video by default (recommended for autoplay).'
+    )
+    
+    enable_loop = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Loop the video continuously.'
+    )
+    
+    enable_autoplay = BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Autoplay the video when page loads.'
+    )
+    
+    disable_on_mobile = BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Disable video on mobile devices to save bandwidth.'
+    )
+    
+    # Animation
+    animation_style = ChoiceBlock(
+        choices=[
+            ('none', 'None'),
+            ('fade-in', 'Fade In'),
+            ('fade-in-up', 'Fade In Up'),
+            ('fade-in-down', 'Fade In Down'),
+            ('slide-in-up', 'Slide In Up'),
+            ('slide-in-down', 'Slide In Down'),
+        ],
+        default='fade-in',
+        help_text='Animation for the content.'
+    )
+
+class ServiceCardBlock(blocks.StructBlock):
+    """Modular service card for IT consulting firm with icon, title, description, and hover animation.
+    
+    Features a clean, responsive, and professional design with customizable hover effects.
+    """
+    
+    # Icon
+    icon = ImageChooserBlock(
+        required=False,
+        help_text='Icon for the service card. Recommended size: 64x64px.'
+    )
+    
+    # Content
+    title = CharBlock(
+        required=True,
+        max_length=100,
+        help_text='Service title.'
+    )
+    
+    description = TextBlock(
+        required=True,
+        max_length=300,
+        help_text='Brief description of the service.'
+    )
+    
+    # Link
+    link = URLBlock(
+        required=False,
+        help_text='Optional link to service details.'
+    )
+    
+    link_text = CharBlock(
+        required=False,
+        max_length=50,
+        help_text='Text for the link (e.g., "Learn more", "View details").'
+    )
+    
+    # Styling options
+    card_style = ChoiceBlock(
+        choices=[
+            ('default', 'Default'),
+            ('outlined', 'Outlined'),
+            ('filled', 'Filled'),
+        ],
+        default='default',
+        help_text='Visual style of the card.'
+    )
+    
+    # Hover animation
+    hover_animation = ChoiceBlock(
+        choices=[
+            ('none', 'None'),
+            ('lift', 'Lift'),
+            ('scale', 'Scale'),
+            ('shadow', 'Shadow'),
+            ('fade', 'Fade'),
+        ],
+        default='lift',
+        help_text='Hover animation effect.'
+    )
+    
+    # Color options
+    background_color = CharBlock(
+        required=False,
+        max_length=7,
+        help_text='Custom background color in hex format (e.g., #F8F9FA).'
+    )
+    
+    text_color = CharBlock(
+        required=False,
+        max_length=7,
+        help_text='Custom text color in hex format (e.g., #212529).'
+    )
+
+class ServiceCardsBlock(blocks.StructBlock):
+    """Container block for multiple service cards with layout options."""
+    
+    heading = CharBlock(
+        required=False,
+        max_length=200,
+        help_text='Optional heading for the service cards section.'
+    )
+    
+    description = TextBlock(
+        required=False,
+        max_length=500,
+        help_text='Optional description for the service cards section.'
+    )
+    
+    cards = blocks.ListBlock(
+        ServiceCardBlock(),
+        min_num=1,
+        max_num=12,
+        help_text='Add service cards to display (1-12 recommended).'
+    )
+    
+    # Layout options
+    columns = ChoiceBlock(
+        choices=[
+            ('1', '1 Column'),
+            ('2', '2 Columns'),
+            ('3', '3 Columns'),
+            ('4', '4 Columns'),
+        ],
+        default='3',
+        help_text='Number of columns for service cards.'
+    )
+    
+    # Alignment
+    text_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='center',
+        help_text='Text alignment for heading and description.'
+    )
+    
+    # Spacing
+    card_spacing = ChoiceBlock(
+        choices=[
+            ('compact', 'Compact'),
+            ('normal', 'Normal'),
+            ('spacious', 'Spacious'),
+        ],
+        default='normal',
+        help_text='Spacing between cards.'
     )

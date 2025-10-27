@@ -1,0 +1,26 @@
+{% load wagtailimages_tags %}
+
+<div class="service-card service-card--{{ value.card_style }} service-card--hover-{{ value.hover_animation }}" 
+     {% if value.background_color %}style="background-color: {{ value.background_color }};"{% endif %}>
+  <div class="service-card__content">
+    {% if value.icon %}
+      <div class="service-card__icon" {% if value.text_color %}style="color: {{ value.text_color }};"{% endif %}>
+        {% image value.icon width-64 height-64 alt=value.title %}
+      </div>
+    {% endif %}
+    
+    <h3 class="service-card__title" {% if value.text_color %}style="color: {{ value.text_color }};"{% endif %}>
+      {{ value.title }}
+    </h3>
+    
+    <p class="service-card__description" {% if value.text_color %}style="color: {{ value.text_color }};"{% endif %}>
+      {{ value.description }}
+    </p>
+    
+    {% if value.link %}
+      <a href="{{ value.link }}" class="service-card__link" {% if value.text_color %}style="color: {{ value.text_color }};"{% endif %}>
+        {{ value.link_text|default:"Learn more" }}
+      </a>
+    {% endif %}
+  </div>
+</div>
